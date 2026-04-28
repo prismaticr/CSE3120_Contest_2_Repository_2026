@@ -194,8 +194,10 @@ celebrate PROC
    MOV EAX, 200
    CALL Delay
    
+   ; bring text back to normal
    MOV EAX, black * 16 + white
    CALL SetTextColor
+   CALL Clrscr
    MOV EDX, OFFSET betMessageW
    CALL WriteString
 
