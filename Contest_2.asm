@@ -40,6 +40,7 @@ SND_FILENAME = 20000h
 ; filenames for songs used
 lobbyWavFile BYTE "The_Dreamy_Stage_...for_Casinopolis.wav", 0
 winWavFile BYTE "and..._Fish_Hits!.wav", 0
+letsGoWavFile BYTE "lets-go_-win.wav", 0
 
 .code
 PlaySound PROTO, pszSound: PTR BYTE, hmod: DWORD, fdwSound: DWORD
@@ -55,6 +56,11 @@ playCelMusic PROC
    INVOKE PlaySound, OFFSET winWavFile, 0, SND_ASYNC OR SND_FILENAME
    RET
 playCelMusic ENDP
+
+playCelVClip PROC
+INVOKE PlaySound, OFFSET letsGoWavFile, 0, SND_FILENAME
+RET
+playCelVClip ENDP
 
 stopMusic PROC
    INVOKE PlaySound, 0, 0, 0
@@ -195,6 +201,12 @@ celebrate PROC
    MOV EDX, OFFSET betMessageW
    CALL WriteString
    RET
+   ; play voice clip
+   PUSH EAX
+   PUSH EDX
+   CALL playCelVClip
+   POP EDX
+   POP EDX
 celebrate ENDP
 
 loseBet:
