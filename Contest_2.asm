@@ -198,17 +198,18 @@ celebrate PROC
    CALL SetTextColor
    MOV EDX, OFFSET betMessageW
    CALL WriteString
-   RET
+
    ; play voice clip
    PUSH EAX
    PUSH EDX
    CALL playCelVClip
    POP EDX
    POP EDX
+   RET
 celebrate ENDP
 
 rolling PROC; display rolling win messages
-   MOV EAX, white * 16 + black ; white background black text
+   MOV EAX, white * 16 + black
    CALL SetTextColor
    MOV EDX, OFFSET betMessageW
    CALL WriteString
@@ -224,10 +225,12 @@ rolling PROC; display rolling win messages
    
    MOV EAX, yellow * 16 + black
    CALL SetTextColor
+   CALL Clrscr
    MOV EDX, OFFSET betMessageW
    CALL WriteString
    MOV EAX, 200
    CALL Delay
+   
    RET
 rolling ENDP
 
