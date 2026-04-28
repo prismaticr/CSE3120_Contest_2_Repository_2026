@@ -2,7 +2,7 @@ INCLUDE Irvine32.inc
 .386
 .stack 4096
 ExitProcess PROTO, dwExitCode:DWORD
-; Random functions(Randomize & RandomRange) and PlaySound function was not were not learned in class.
+; Random functions (Randomize & RandomRange) and PlaySound function was not were not learned in class.
 ; I had to find a way to create RNG and luckily Irvine has one
 
 .data
@@ -59,8 +59,8 @@ playCelMusic PROC
 playCelMusic ENDP
 
 playCelVClip PROC
-INVOKE PlaySound, OFFSET letsGoWavFile, 0, SND_FILENAME
-RET
+	INVOKE PlaySound, OFFSET letsGoWavFile, 0, SND_FILENAME
+	RET
 playCelVClip ENDP
 
 playLoseClip PROC
@@ -105,7 +105,7 @@ betLoop:
    MOV ECX, LENGTHOF buffer - 1
    CALL Readstring
 
-   MOV esi, 0 ; 
+   MOV esi, 0
 
    ; set how much is bet
    MOV betCount, 100
@@ -124,7 +124,6 @@ betLoop:
 
    jmp workLoop
 
-; work
 workLoop:
    
    ; notify player
@@ -138,10 +137,10 @@ workLoop:
    MOV rand, EAX
    POP EAX
    
-   ; win lose branch
+   ; win/lose branching
    PUSH ESI
    MOV ESI, 0
-   CMP ESI, rand
+   CMP ESI, rand ; 0 = win & anythingElse = lose
    POP ESI
    
    JZ  winBet
@@ -216,6 +215,7 @@ celebrate PROC
 celebrate ENDP
 
 loseBet:
+   ; subtract what was lost
    MOV ECX, betcount
    MOV EAX, total
    SUB EAX, ECX
