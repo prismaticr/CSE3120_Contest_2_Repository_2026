@@ -42,6 +42,7 @@ lobbyWavFile BYTE "The_Dreamy_Stage_...for_Casinopolis.wav", 0
 winWavFile BYTE "and..._Fish_Hits!.wav", 0
 letsGoWavFile BYTE "lets-go_-win.wav", 0
 loseWavFile BYTE "WSBowlLose.wav", 0
+leaveWavFile BYTE "FSN_Midnight_Interval.wav", 0
 
 .code
 PlaySound PROTO, pszSound: PTR BYTE, hmod: DWORD, fdwSound: DWORD
@@ -67,6 +68,11 @@ playLoseClip PROC
    INVOKE PlaySound, OFFSET loseWavFile, 0, SND_FILENAME
    RET
 playLoseClip ENDP
+
+playLeaveMusic PROC
+   INVOKE PlaySound, OFFSET leaveWavFile, 0, SND_FILENAME
+   RET
+playLeaveMusic ENDP
 
 stopMusic PROC
    INVOKE PlaySound, 0, 0, 0
@@ -242,8 +248,8 @@ endloop:
    MOV EDX, OFFSET exitMessage
    call WriteString
    
-   MOV EAX, 35000 ; delay exit by n ms
-   CALL Delay
+   
+   CALL playLeaveMusic
    exit
 
 INVOKE ExitProcess,0
