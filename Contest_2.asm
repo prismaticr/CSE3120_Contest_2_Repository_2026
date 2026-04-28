@@ -2,7 +2,7 @@ INCLUDE Irvine32.inc
 .386
 .stack 4096
 ExitProcess PROTO, dwExitCode:DWORD
-; Random functions were not learned in class (Randomize & RandomRange)
+; Random functions(Randomize & RandomRange) and PlaySound function was not were not learned in class.
 ; I had to find a way to create RNG and luckily Irvine has one
 
 .data
@@ -32,7 +32,24 @@ betMessageL BYTE "Ermmm... You lost it all lol", 0Dh, 0Ah, 0
 
 exitMessage BYTE "Don't forget to come back!! :)", 0Dh, 0Ah, 0
 
+; constants for PlaySound
+SND_ASYNC = 1
+SND_LOOP = 8
+SND_FILENAME = 20000h
+
+; filenames for songs used
+lobbyWavFile BYTE "The_Dreamy_Stage_...for_Casinopolis.wav", 0
+
 .code
+PlaySound PROTO, pszSound: PTR BYTE, hmod: DWORD, fdwSound: DWORD
+INCLUDELIB Winmm.lib
+
+; procedures for each audio file
+playLobbyMusic PROC
+   INVOKE PlaySound, OFFSET lobbyWavFile, 0, SND_ASYNC OR SND_LOOP OR SND_FILENAME
+   RET
+playLobbyMusic ENDP
+
 main PROC
 
 ; greeting message
@@ -59,6 +76,9 @@ betLoop:
    CALL Readstring
 
    MOV esi, 0 ; 
+
+   ; set how much is bet
+   MOV betCount, 100
 
    cmp buffer[ESI], 0
    je endloop
