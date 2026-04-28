@@ -13,7 +13,8 @@ betCount DWORD ?
 
 ; message to explain game and rules
 greet BYTE "Welcome to the Casino! Where money is pratically free! ", 0Dh, 0Ah
-   BYTE "We'll give you 100 dollars to start for free (*^_^*)", 0Dh, 0Ah, 0
+   BYTE "Each bet is a free $100! Your overall winnings/loses will be tracked.", 0Dh, 0Ah
+   BYTE "Don't worry what happens if you leave while in the red :)", 0Dh, 0Ah, 0
 balStatement BYTE "You're current balance is: ", 0
 greet2 BYTE 0Dh, 0Ah, "Type g to gamble or l to leave if you're a coward! ", 0
 buffer BYTE 2 DUP(?), 0 ; has to one bigger than expected size
