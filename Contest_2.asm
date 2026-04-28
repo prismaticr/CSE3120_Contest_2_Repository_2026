@@ -186,26 +186,6 @@ celebrate PROC
       loop restart
    POP ECX
 
-   MOV EAX, white * 16 + black ; white background black text
-   CALL SetTextColor
-   MOV EDX, OFFSET betMessageW
-   CALL WriteString
-   MOV EAX, 200
-   CALL Delay ; delays each win message so it rolls out
-   
-   MOV EAX, blue * 16 + black
-   CALL SetTextColor
-   MOV EDX, OFFSET betMessageW
-   CALL WriteString
-   MOV EAX, 200
-   CALL Delay
-   
-   MOV EAX, yellow * 16 + black
-   CALL SetTextColor
-   MOV EDX, OFFSET betMessageW
-   CALL WriteString
-   MOV EAX, 200
-   CALL Delay
    
    MOV EAX, white * 16 + black
    CALL SetTextColor
@@ -228,6 +208,26 @@ celebrate PROC
 celebrate ENDP
 
 rolling PROC; display rolling win messages
+   MOV EAX, white * 16 + black ; white background black text
+   CALL SetTextColor
+   MOV EDX, OFFSET betMessageW
+   CALL WriteString
+   MOV EAX, 200
+   CALL Delay ; delays each win message so it rolls out
+   
+   MOV EAX, blue * 16 + black
+   CALL SetTextColor
+   MOV EDX, OFFSET betMessageW
+   CALL WriteString
+   MOV EAX, 200
+   CALL Delay
+   
+   MOV EAX, yellow * 16 + black
+   CALL SetTextColor
+   MOV EDX, OFFSET betMessageW
+   CALL WriteString
+   MOV EAX, 200
+   CALL Delay
    RET
 rolling ENDP
 
