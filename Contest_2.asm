@@ -28,8 +28,7 @@ oddsCeiling DWORD 99
 
 betMessageW BYTE "YOU WON!!! \(@^0^@)/", 0Dh, 0Ah, 0
 
-betMessageL BYTE "Ermmm... You lost it all lol", 0Dh, 0Ah
-   BYTE "Anyway, come back when you ain't broke", 0Dh, 0Ah, 0
+betMessageL BYTE "Ermmm... You lost it all lol", 0Dh, 0Ah, 0
 
 exitMessage BYTE "Don't forget to come back!! :)", 0Dh, 0Ah, 0
 
@@ -43,8 +42,8 @@ call WriteString
 CALL Randomize ; sets seed
 
 betLoop:
-   ; output balance
-   MOV EDX, OFFSET balStatement
+   ; output total winnings
+   MOV EDX, OFFSET totalStatement ; OFFSET balStatement
    call WriteString
    
    MOV EAX, total
@@ -73,7 +72,7 @@ workLoop:
    
    ; notify player
    MOV EDX, OFFSET betMessage1
-   CALL WriteString ; Maybe also print new balance
+   CALL WriteString
    
    ; run calculation
    PUSH EAX
