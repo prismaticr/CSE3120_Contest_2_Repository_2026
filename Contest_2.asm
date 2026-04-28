@@ -41,6 +41,7 @@ SND_FILENAME = 20000h
 lobbyWavFile BYTE "The_Dreamy_Stage_...for_Casinopolis.wav", 0
 winWavFile BYTE "and..._Fish_Hits!.wav", 0
 letsGoWavFile BYTE "lets-go_-win.wav", 0
+loseWavFile BYTE "WSBowlLose.wav", 0
 
 .code
 PlaySound PROTO, pszSound: PTR BYTE, hmod: DWORD, fdwSound: DWORD
@@ -61,6 +62,11 @@ playCelVClip PROC
 INVOKE PlaySound, OFFSET letsGoWavFile, 0, SND_FILENAME
 RET
 playCelVClip ENDP
+
+playLoseClip PROC
+   INVOKE PlaySound, OFFSET loseWavFile, 0, SND_FILENAME
+   RET
+playLoseClip ENDP
 
 stopMusic PROC
    INVOKE PlaySound, 0, 0, 0
@@ -217,11 +223,18 @@ loseBet:
    ; set bet to 0
    MOV betCount, 0
    
+   PUSH EAX
+   PUSH EDX
+   CALL playLoseClip
+   POP EDX
+   POP EDX
+
    MOV EDX, OFFSET betMessageL
    CALL WriteString
    
-   ; JMP betLoop
-   JMP endloop ; no money left to take so exit
+   MOV EAX, 200
+   CALL Delay
+   JMP betLoop
 
 ; exit 
 endloop:
