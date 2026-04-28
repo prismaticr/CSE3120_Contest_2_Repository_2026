@@ -39,6 +39,7 @@ SND_FILENAME = 20000h
 
 ; filenames for songs used
 lobbyWavFile BYTE "The_Dreamy_Stage_...for_Casinopolis.wav", 0
+winWavFile BYTE "and..._Fish_Hits!.wav", 0
 
 .code
 PlaySound PROTO, pszSound: PTR BYTE, hmod: DWORD, fdwSound: DWORD
@@ -50,6 +51,16 @@ playLobbyMusic PROC
    RET
 playLobbyMusic ENDP
 
+playCelMusic PROC
+   INVOKE PlaySound, OFFSET winWavFile, 0, SND_ASYNC OR SND_FILENAME
+   RET
+playCelMusic ENDP
+
+stopMusic PROC
+   INVOKE PlaySound, 0, 0, 0
+   RET
+stopMusic ENDP
+
 main PROC
 
 ; greeting message
@@ -59,6 +70,13 @@ call WriteString
 CALL Randomize ; sets seed
 
 betLoop:
+   ; play music during bet interlude
+   PUSH EAX
+   PUSH EDX
+   CALL playLobbyMusic
+   POP EAX
+   POP EDX
+
    ; output total winnings
    MOV EDX, OFFSET totalStatement ; OFFSET balStatement
    call WriteString
@@ -79,6 +97,13 @@ betLoop:
 
    ; set how much is bet
    MOV betCount, 100
+
+   ; Stop interlude music
+   PUSH EAX
+   PUSH EDX
+   CALL stopMusic
+   POP EDX
+   POP EDX
 
    cmp buffer[ESI], 0
    je endloop
@@ -128,6 +153,15 @@ winBet:
    JMP betLoop
 
 celebrate PROC
+   ; play celebration music
+   PUSH EAX
+   PUSH EDX
+   INVOKE playCelMusic
+   MOV EAX, 1000
+   CALL Delay
+   POP EDX
+   POP EDX
+
    MOV EAX, white * 16 + black ; white background black text
    CALL SetTextColor
    MOV EDX, OFFSET betMessageW
