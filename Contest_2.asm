@@ -179,6 +179,13 @@ celebrate PROC
    POP EDX
    POP EDX
 
+   PUSH ECX
+   MOV ECX, 18
+   restart:
+      CALL rolling
+      loop restart
+   POP ECX
+
    MOV EAX, white * 16 + black ; white background black text
    CALL SetTextColor
    MOV EDX, OFFSET betMessageW
@@ -219,6 +226,10 @@ celebrate PROC
    POP EDX
    POP EDX
 celebrate ENDP
+
+rolling PROC; display rolling win messages
+   RET
+rolling ENDP
 
 loseBet:
    ; subtract what was lost
