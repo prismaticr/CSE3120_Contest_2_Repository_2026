@@ -20,8 +20,10 @@ greet2 BYTE 0Dh, 0Ah, "Type g to gamble or type l (or anything else) to leave if
 buffer BYTE 2 DUP(?), 0 ; has to one bigger than expected size
 
 betMessage1 BYTE "Your bet is placed!", 0Dh, 0Ah, 0
-rand DWORD ?
 
+; receives random num
+rand DWORD ?
+; determines the odds of gamble (1/oddsCeiling+1)
 oddsCeiling DWORD 99
 
 betMessageW BYTE "YOU WON!!! \(@^0^@)/", 0Dh, 0Ah, 0
